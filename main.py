@@ -27,7 +27,7 @@ try:
     client = OpenAI(
         api_key=api_key,
     )
-    logger.info(f"OpenAI client initialized successfully : {api_key}")
+    logger.info(f"OpenAI client initialized successfully")
 except Exception as e:
     logger.error(f"Failed to initialize OpenAI client: {e}")
     raise
@@ -63,7 +63,7 @@ def count_tokens(text, model="gpt-3.5-turbo"):
         # Fallback estimation: roughly 4 characters per token
         return len(text) // 4
 
-def truncate_text_to_fit_context(text, max_tokens=3000):
+def truncate_text_to_fit_context(text, max_tokens=12000):
     """
     Truncate text to fit within token limits while preserving important sections
     """
@@ -110,7 +110,7 @@ def gpt_chatbot_with_document(user_input: str, document_content: str) -> str:
     logger.info("Processing new chat request")
     
     # Truncate document content to fit within context window
-    truncated_content = truncate_text_to_fit_context(document_content, max_tokens=3000)
+    truncated_content = truncate_text_to_fit_context(document_content, max_tokens=12000)
     logger.debug(f"Document content truncated to {count_tokens(truncated_content)} tokens")
     
     # Create system message with document context
